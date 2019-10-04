@@ -39,8 +39,52 @@ Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest re
 This example creates an ECS cluster service scheduled with daemon scheduling strategy:
 
 ```hcl
-module "fluentd_logs_aggregator" {
+module "daemon_service" {
   source     = "git::https://github.com/aleks-fofanov/terraform-aws-ecs-service-task-daemonset?ref=master"
+  name       = "daemon"
+  namespace  = "cp"
+  stage      = "prod"
+
+  ecs_cluster_arn = "XXXXXXXXXXX"
+
+  container_definition_json = "${module.container_definition.json}"
+  container_name            = "daemon"
+  task_cpu                  = "256"
+  task_memory               = "512"
+}
+```
+
+
+
+
+## Examples
+
+### Example With Container Definition
+This example provisions Fluent ECS services scheduled as a daemon on every ECS container instance (EC2):
+```hcl
+module "fluentd_container_definition" {
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition?ref=master"
+  container_name               = "fluentd"
+  container_image              = "aleksfofanov/ecs-datadog-logs-aggregator:0.1.0"
+  container_memory             = "512"
+  container_memory_reservation = "512"
+  container_cpu                = "256"
+
+  port_mappings = [
+    {
+      containerPort = "24224"
+      hostPort      = "24224"
+      protocol      = "udp"
+    },
+    {
+      containerPort = "24224"
+      hostPort      = "24224"
+      protocol      = "tcp"
+    },
+  ]
+}
+module "fluentd_logs_aggregator" {
+  source     = "git::https://github.com/aleks-fofanov/terraform-aws-ecs-service-task-daemonset?ref=tags/0.1.0"
   name       = "fluentd"
   namespace  = "cp"
   stage      = "prod"
@@ -53,9 +97,6 @@ module "fluentd_logs_aggregator" {
   task_memory               = "512"
 }
 ```
-
-
-
 
 
 
