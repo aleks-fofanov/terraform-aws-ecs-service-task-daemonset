@@ -1,3 +1,15 @@
+#############################################################
+# Providers
+#############################################################
+
+provider "aws" {
+  version = "~> 2.12"
+}
+
+#############################################################
+# Labels
+#############################################################
+
 module "default_label" {
   source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=0.2.1"
   attributes = "${var.attributes}"
@@ -37,6 +49,10 @@ module "exec_label" {
   stage      = "${var.stage}"
   tags       = "${var.tags}"
 }
+
+#############################################################
+# Task Defenition
+#############################################################
 
 resource "aws_ecs_task_definition" "default" {
   family                   = "${module.default_label.id}"
@@ -80,6 +96,10 @@ data "aws_iam_policy_document" "ecs_service" {
     }
   }
 }
+
+#############################################################
+# Service
+#############################################################
 
 resource "aws_iam_role" "ecs_service" {
   name               = "${module.service_label.id}"
