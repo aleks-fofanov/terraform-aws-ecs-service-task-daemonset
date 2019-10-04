@@ -84,7 +84,7 @@ module "fluentd_container_definition" {
   ]
 }
 module "fluentd_logs_aggregator" {
-  source     = "git::https://github.com/aleks-fofanov/terraform-aws-ecs-service-task-daemonset?ref=tags/0.1.0"
+  source     = "git::https://github.com/aleks-fofanov/terraform-aws-ecs-service-task-daemonset?ref=master"
   name       = "fluentd"
   namespace  = "cp"
   stage      = "prod"
