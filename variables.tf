@@ -41,29 +41,14 @@ variable "container_definition_json" {
   description = "The JSON of the task container definition"
 }
 
-variable "container_name" {
-  type        = "string"
-  description = "The name of the container in task definition to associate with the load balancer"
-}
-
-variable "container_port" {
-  description = "The port on the container to associate with the load balancer"
-  default     = 80
-}
-
 variable "task_cpu" {
-  description = "The number of CPU units used by the task. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  description = "The number of CPU units used by the task"
   default     = 256
 }
 
 variable "task_memory" {
-  description = "The amount of memory (in MiB) used by the task. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  description = "The amount of memory (in MiB) used by the task"
   default     = 512
-}
-
-variable "deployment_controller_type" {
-  description = "Type of deployment controller. Valid values: `CODE_DEPLOY`, `ECS`."
-  default     = "ECS"
 }
 
 variable "volumes" {

@@ -173,10 +173,6 @@ resource "aws_ecs_service" "ignore_changes_task_definition" {
   cluster             = "${var.ecs_cluster_arn}"
   tags                = "${module.default_label.tags}"
 
-  deployment_controller {
-    type = "${var.deployment_controller_type}"
-  }
-
   lifecycle {
     ignore_changes = ["task_definition"]
   }
@@ -190,8 +186,4 @@ resource "aws_ecs_service" "default" {
   scheduling_strategy = "DAEMON"
   cluster             = "${var.ecs_cluster_arn}"
   tags                = "${module.default_label.tags}"
-
-  deployment_controller {
-    type = "${var.deployment_controller_type}"
-  }
 }

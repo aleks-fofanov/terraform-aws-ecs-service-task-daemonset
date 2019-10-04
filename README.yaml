@@ -110,7 +110,6 @@ examples: |-
     ecs_cluster_arn = "XXXXXXXXXXX"
 
     container_definition_json = "${module.fluentd_container_definition.json}"
-    container_name            = "fluentd"
     task_cpu                  = "256"
     task_memory               = "512"
   }
